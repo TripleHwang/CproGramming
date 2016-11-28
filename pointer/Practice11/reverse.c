@@ -13,19 +13,16 @@ void reverse(char s[]) {
 }
 
 void myreverse(char *s){
-	int i, j;
-	char c;
-	j = 0;
-	while (*s != '\0') {
-		j++;
-		s++;
-	}
-	s = s - j;
-	for (i = 0; i < j; i++, j--) {
-		c = *(s + i);
-		*(s + i) = *(s + j - 1);
-		*(s + j - 1) = c;
-	}
+  int c;
+  char *start = s, *end = s;
+  while(*end != '\0') end++;
+  end--;
+
+  for(;start<end;start++,end--){
+    c = *start;
+    *start = *end;
+    *end = c;
+  }
 }
 
 int main(void){
