@@ -1,21 +1,14 @@
 #include <stdio.h>
-#include <string.h>
+#include <string.h> // strcpy를 사용하기 위해 불러옵니다.
 
-#define MAXLEN 1000 
+#define MAXLEN 1000
 
+/*
+  직접 구현하지 않고, 트렐로의 강의자료7번
+  slide7code.zip에 있는 salloc.c를 사용합니다.
+  함께 컴파일 하기 위해 sortlines폴더에 함께 넣습니다.
+*/
 char *alloc(int);
-
-static char allocbuf[MAXLEN];
-static char *allocp = allocbuf;
-
-char *alloc(int n) {
-	if (allocbuf + MAXLEN - allocp >= n) {
-		allocp += n;
-		return allocp - n;
-	}
-	else
-		return NULL;
-}
 
 /* readline: read line into s, return length */
 int readline(char s[], int lim) {
@@ -40,6 +33,7 @@ int readlines(char *lineptr[], int maxlines) {
 			return -1;
 		else {
 			line[len-1] = '\0';
+			// strcpy() 함수를 쓰기 위해선 string.h를 불러와야 합니다.
 			strcpy(p, line);
 			lineptr[nlines++] = p;
 		}
@@ -47,29 +41,12 @@ int readlines(char *lineptr[], int maxlines) {
 }
 
 void writelines(char *lineptr[], int nlines) {
+	int i;
+
 	while (nlines-- > 0)
 		printf("%s\n", *lineptr++);
-}
-
-void swap(char *v[], int i, int j) {
-	char *temp;
-
-	temp = v[i];
-	v[i] = v[j];
-	v[j] = temp;
-}
-
-void qsort(char *lineptr[], int left, int right)
-{
-	int i, last, pivot;
-	if (left >= right)
-		return;
-	swap(lineptr, left, (left + right) / 2);
-	pivot = left;
-	for (i = left + 1; i <= right; i++)
-		if (strcmp(lineptr[i], lineptr[pivot])<0)
-			swap(lineptr, ++pivot, i);
-	swap(lineptr, left, pivot);
-	qsort(lineptr, left, pivot - 1);
-	qsort(lineptr, pivot + 1, right);
+	/*
+	for (i = 0; i < nlines; i++)
+		printf("%s\n", lineptr[i]);
+	*/
 }
